@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="me.cosmodro.tapsy"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="7" />
+
+    <application
+        android:icon="@drawable/tapsy_icon"
+        android:label="@string/app_name" 
+        android:debuggable="true">
+        <activity
+            android:label="@string/app_name"
+            android:name=".TapsyActivity" >
+            <meta-data android:name="com.wimm.watch.view"
+                    android:resource="@layout/main" />
+            <intent-filter >
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.wimm.WATCHFACE" />
+            </intent-filter>
+            <intent-filter >
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

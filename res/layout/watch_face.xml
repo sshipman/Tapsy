@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/watchFace"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/beer_background">
+  <Button
+    android:id="@+id/addDrinkButton"
+    android:layout_width="53sp"
+    android:layout_height="53sp"
+    android:padding="10dp"
+    android:background="@drawable/add_drink_button"  
+  />  
+  <TextView
+      android:id="@+id/drinkCountLabel"
+      style="@style/watch_text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentRight="true"
+      android:paddingRight="10sp"
+      android:text="@string/drinkCount" />
+  <TextView
+      android:id="@+id/drinkCountText"
+      style="@style/watch_text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/drinkCountLabel"
+      android:layout_alignParentRight="true"
+      android:paddingRight="10sp"
+      android:textSize="30sp"
+      android:text="0" />
+  <TextView 
+      android:id="@+id/timeText"
+      style="@style/watch_text"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/addDrinkButton"
+      android:textSize="45sp"
+      android:padding="1sp"
+      android:text="time"
+      android:gravity="center"/>
+  <TextView
+      android:id="@+id/timeLeftLabel"
+      style="@style/watch_text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/timeText"
+      android:layout_alignParentRight="true"
+      android:text="@string/timeLeft" />
+  <TextView
+      android:id="@+id/minLabel"
+      style="@style/watch_text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentRight="true"
+      android:text="@string/minLabel" />
+  <TextView
+      android:id="@+id/timeLeft"
+      style="@style/watch_text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/timeLeftLabel"
+      android:layout_toLeftOf="@id/minLabel"
+      android:textSize="30sp"
+      android:text="0" />
+  
+  <TextView
+      android:id="@+id/bacLabel"
+      style="@style/watch_text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/timeText"
+      android:text="@string/bac" />
+  <TextView
+      android:id="@+id/bac"
+      style="@style/watch_text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/bacLabel"
+      android:textSize="30sp"
+      android:text="0" />
+</RelativeLayout>

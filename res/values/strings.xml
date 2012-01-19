@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tapsy</string>
+    <string name="drinkCount">I\'ve had:</string>
+    <string name="timeLeft">Until safe:</string>
+    <string name="bac">B.A.C</string>
+    <string name="minLabel">min</string>
+    <string name="reset">Reset</string>
+    <string name="weight">Weight (lbs)</string>
+    <string name="gender">I\'m a:</string>
+    <string name="male">Man</string>
+    <string name="female">Woman</string>
+    <string name="threshold">\&quot;Safe\&quot; BAC Limit (hundredths)</string>
+
+</resources>

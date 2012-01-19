@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.wimm.framework.view.ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootPrefView">
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:background="#000"
+	    android:orientation="vertical" >
+	  <Button
+	      android:id="@+id/resetButton"
+	      android:layout_width="fill_parent"
+	      android:layout_height="wrap_content"
+	      android:text="@string/reset" />
+	  <TextView android:id="@+id/weightLabel"
+	      android:layout_width="fill_parent"
+	      android:layout_height="wrap_content"
+	      android:text="@string/weight" /> 
+	  <me.cosmodro.wimm.widgets.NumberPicker
+	      xmlns:cosmodro="http://schemas.android.com/me.cosmodro"
+	     android:id="@+id/weightPref"
+	     android:orientation="horizontal"
+	     android:layout_width="fill_parent"
+	     android:layout_height="wrap_content"
+	     android:gravity="center"
+	     cosmodro:defaultValue="150"
+	     cosmodro:mimimumValue="1"
+	     cosmodro:decrementLabel="&lt;"
+	     cosmodro:incrementLabel="&gt;" />
+	  <TextView android:id="@+id/genderLabel"
+	      android:layout_width="fill_parent"
+	      android:layout_height="wrap_content"
+	      android:text="@string/gender" /> 
+	  <RadioGroup
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical">
+	    <RadioButton android:id="@+id/radio_male"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/male" />
+	    <RadioButton android:id="@+id/radio_female"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/female" />
+	  </RadioGroup>
+      <TextView android:id="@+id/thresholdLabel"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:text="@string/threshold" /> 
+      <me.cosmodro.wimm.widgets.NumberPicker
+          xmlns:cosmodro="http://schemas.android.com/me.cosmodro"
+         android:id="@+id/thresholdPref"
+         android:orientation="horizontal"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:gravity="center"
+         cosmodro:defaultValue="8"
+         cosmodro:decrementLabel="&lt;"
+         cosmodro:incrementLabel="&gt;" />
+      	      	  
+	</LinearLayout>
+</com.wimm.framework.view.ScrollView>   
