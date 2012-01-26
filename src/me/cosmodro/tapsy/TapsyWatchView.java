@@ -41,9 +41,11 @@ public class TapsyWatchView extends BaseWatchView {
 		}
 		timeView.setText(hour +":"+minute);
 	  
+		/*
 		if (!isDisplayActive()){
 			postInvalidateDelayed(15000);
 		}
+		*/
 		activity.updateUI();
 	}
 
