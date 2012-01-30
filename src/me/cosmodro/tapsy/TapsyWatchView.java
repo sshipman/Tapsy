@@ -1,7 +1,9 @@
 package me.cosmodro.tapsy;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.support.v4.view.ViewPager;
 import android.text.format.Time;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -13,12 +15,28 @@ import com.wimm.framework.watches.BaseWatchView;
 public class TapsyWatchView extends BaseWatchView {
 	private static String TAG = "TapsyWatchView";
 
-    private TapsyActivity activity;
+
+	private ViewPager pager;
+	private TapsyData tapsy;
+	private TapsyPagerAdapter pagerAdapter;
+	
+    //private TapsyActivity activity;
     
 	public TapsyWatchView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		activity = (TapsyActivity) context;
-		Log.d(TAG, "TapsyWatchView constructor");
+		//activity = (TapsyActivity) context;
+		//Log.d(TAG, "TapsyWatchView constructor");
+		tapsy = new TapsyData(context);
+		pagerAdapter = new TapsyPagerAdapter(tapsy, (Activity)context);
+		tapsy.loadPrefs();
+	}
+	
+	@Override
+	protected void onFinishInflate(){
+		super.onFinishInflate();
+		pager = (ViewPager) this.findViewById(R.id.pager);
+		//Log.d(TAG, "pager is: "+pager);
+		pager.setAdapter(pagerAdapter);
 	}
 
 	@Override
@@ -46,7 +64,8 @@ public class TapsyWatchView extends BaseWatchView {
 			postInvalidateDelayed(15000);
 		}
 		*/
-		activity.updateUI();
+		//activity.updateUI();
+		tapsy.updateUI();
 	}
 
 }

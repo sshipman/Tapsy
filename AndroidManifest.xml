@@ -10,9 +10,11 @@
         android:icon="@drawable/tapsy_icon"
         android:label="@string/app_name" 
         android:debuggable="true">
+        <uses-library android:name="com.wimm.framework" />
+
         <activity
             android:label="@string/app_name"
-            android:name=".TapsyActivity" >
+            android:name="com.wimm.framework.watches.WatchActivity" >
             <meta-data android:name="com.wimm.watch.view"
                     android:resource="@layout/main" />
             <intent-filter >

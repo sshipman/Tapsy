@@ -25,21 +25,15 @@ package me.cosmodro.tapsy;
 
 import java.text.DecimalFormat;
 
-import com.wimm.framework.view.ScrollView;
-import com.wimm.framework.watches.WatchActivity;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.text.format.Time;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
-public class TapsyActivity extends WatchActivity {
-	private final static String TAG = "TapsyActivity";
+public class TapsyData {
+	private final static String TAG = "TapsyData";
+	private final static String TAPSY = "TAPSY";
 
 	private final static double millisPerHour = 1000 * 60 * 60;
 
@@ -48,30 +42,26 @@ public class TapsyActivity extends WatchActivity {
 	private double weight;
 	private Gender gender;
 	private double legalThreshold;
-
-	private ViewPager pager;
-	private TapsyPagerAdapter pagerAdapter;
-	private ScrollView prefsRootView;
 	
 	private TextView drinksCountView;
 	private TextView bacView;
 	private TextView timeLeftView;
+	private Context context;
 	
-	/** Called when the activity is first created. */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		//setContentView(R.layout.main);
-		pagerAdapter = new TapsyPagerAdapter(this);
-		pager = (ViewPager) this.findViewById(R.id.pager);
-		pager.setAdapter(pagerAdapter);
+	public TapsyData(Context ctx){
+		this.context = ctx;
 	}
 	
-	@Override
-	public void onPause(){
-		super.onPause();
-		SharedPreferences prefs = this.getPreferences(MODE_PRIVATE);
+	public SharedPreferences getPrefs(){
+		SharedPreferences prefs = context.getSharedPreferences(TAPSY, Context.MODE_PRIVATE);
+		return prefs;
+	}
+
+	public void savePrefs(){
+		//Log.d(TAG, "savePrefs");
+		SharedPreferences prefs = getPrefs();
 		SharedPreferences.Editor editor = prefs.edit();
+		//Log.d(TAG, "saving drinksCount as:"+drinksCount);
 		editor.putInt("drinksCount", drinksCount);
 		long dst = -1;
 		if (drinkStartTime != null){
@@ -81,19 +71,19 @@ public class TapsyActivity extends WatchActivity {
 		editor.commit();
 	}
 	
-	@Override
-	public void onResume(){
-		super.onResume();
-		SharedPreferences prefs = this.getPreferences(MODE_PRIVATE);
-		setDrinksCount(prefs.getInt("drinksCount", 0));
+	public void loadPrefs(){
+		//Log.d(TAG, "loadPrefs");
+		SharedPreferences prefs = getPrefs();
+		int dc = prefs.getInt("drinksCount", 0);
+		//Log.d(TAG, "got drinksCount as: "+dc);
+		setDrinksCount(dc);
 		setDrinkStartTime(prefs.getLong("drinkStartTime", -1));
 		if (getBAC(System.currentTimeMillis()) < 0.01){
 			reset();
 		}
 	}
 
-	@Override
-	public boolean dragCanExit() {
+/*	public boolean dragCanExit() {
 		if (pager.getCurrentItem() == 1) {
 			prefsRootView = (ScrollView) this.findViewById(R.id.rootPrefView);
 			return prefsRootView.getScrollY() == 0;
@@ -101,13 +91,14 @@ public class TapsyActivity extends WatchActivity {
 			return true;
 		}
 	}
-
+*/
 	public void addDrink() {
 		if (drinksCount == 0) {
 			// first drink, start the timer.
 			setDrinkStartTime(System.currentTimeMillis());
 		}
 		setDrinksCount(drinksCount+1);
+		savePrefs();
 		updateUI();
 	}
 
@@ -208,6 +199,7 @@ public class TapsyActivity extends WatchActivity {
 	public void reset() {
 		setDrinksCount(0);
 		setDrinkStartTime(null);
+		savePrefs();
 		updateUI();
 	}
 	

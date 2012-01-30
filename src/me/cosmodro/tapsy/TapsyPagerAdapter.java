@@ -7,7 +7,7 @@ import com.wimm.framework.app.FontManager;
 import me.cosmodro.wimm.widgets.NumberPicker;
 import me.cosmodro.wimm.widgets.OnValueChangedListener;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Parcelable;
@@ -25,20 +25,25 @@ import android.widget.TextView;
 public class TapsyPagerAdapter extends PagerAdapter {
 	protected static final String TAG = "TapsyPagerAdapter";
 	private ArrayList<View> views;
-	private TapsyActivity cxt;
+	private TapsyData tapsy;
 	public View watchFace;
 	public View prefsView;
 	private SharedPreferences prefs;
 	
-	public TapsyPagerAdapter(TapsyActivity context){
+	public TapsyPagerAdapter(TapsyData tapsy, Activity context){
 		views = new ArrayList<View>();
-		cxt = context;
+		this.tapsy = tapsy;
+		//Log.d(TAG, "constructor");
 		LayoutInflater lif = context.getLayoutInflater();
+		//Log.d(TAG, "inflating watch face");
 		watchFace = lif.inflate(R.layout.watch_face, null);
 		views.add(watchFace);
+		//Log.d(TAG, "inflating prefs");
 		prefsView = lif.inflate(R.layout.prefs, null);
 		views.add(prefsView);
+		//Log.d(TAG, "inflated.  now init prefs");
 		initPrefs();
+		//Log.d(TAG, "and init watch ui");
 		initWatchUI();
 	}
 	
@@ -46,23 +51,23 @@ public class TapsyPagerAdapter extends PagerAdapter {
 	 * initialize prefs with values from shared preferences
 	 */
 	private void initPrefs(){
-		prefs = cxt.getPreferences(Context.MODE_PRIVATE);
+		prefs = tapsy.getPrefs();
 		final SharedPreferences.Editor editor = prefs.edit();
 		Button resetButton = (Button) prefsView.findViewById(R.id.resetButton);
 		resetButton.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View arg0) {
-				cxt.reset();
+				tapsy.reset();
 			}
 		});
 		
 		NumberPicker weight = (NumberPicker) prefsView.findViewById(R.id.weightPref);
 		weight.setValue(prefs.getInt("weight", 150));
-		cxt.setWeight(weight.getValue());
+		tapsy.setWeight(weight.getValue());
 		weight.setOnValueChangedListener(new OnValueChangedListener(){
 			@Override
 			public void onValueChanged(int value) {
-				cxt.setWeight(value);
+				tapsy.setWeight(value);
 				editor.putInt("weight", value);
 				editor.commit();
 			}
@@ -71,10 +76,10 @@ public class TapsyPagerAdapter extends PagerAdapter {
 		RadioButton female = (RadioButton) prefsView.findViewById(R.id.radio_female);
 		male.setChecked(prefs.getBoolean("maleGender", true));
 		if (male.isChecked()){
-			cxt.setGender(Gender.MALE);
+			tapsy.setGender(Gender.MALE);
 		}else{
 			female.setChecked(true);
-			cxt.setGender(Gender.FEMALE);
+			tapsy.setGender(Gender.FEMALE);
 		}
 		OnClickListener radioListener = new OnClickListener(){
 			@Override
@@ -82,12 +87,12 @@ public class TapsyPagerAdapter extends PagerAdapter {
 				RadioButton rb = (RadioButton) v;
 				boolean isMale = true;
 				if (rb.equals(male)){
-					cxt.setGender(Gender.MALE);
+					tapsy.setGender(Gender.MALE);
 				}else{
-					cxt.setGender(Gender.FEMALE);
+					tapsy.setGender(Gender.FEMALE);
 					isMale = false;
 				}
-				Log.d(TAG, "setting gender to isMale:"+isMale);
+				//Log.d(TAG, "setting gender to isMale:"+isMale);
 				editor.putBoolean("maleGender", isMale);
 				editor.commit();
 			}
@@ -97,12 +102,11 @@ public class TapsyPagerAdapter extends PagerAdapter {
 		
 		NumberPicker threshold = (NumberPicker) prefsView.findViewById(R.id.thresholdPref);
 		threshold.setValue(prefs.getInt("threshold", 6));
-		cxt.setLegalThreshold(threshold.getValue() / 100d);
+		tapsy.setLegalThreshold(threshold.getValue() / 100d);
 		threshold.setOnValueChangedListener(new OnValueChangedListener(){
 			@Override
 			public void onValueChanged(int value) {
-				// TODO Auto-generated method stub
-				cxt.setLegalThreshold(value/100d);
+				tapsy.setLegalThreshold(value/100d);
 				editor.putInt("threshold", value);
 				editor.commit();
 			}
@@ -114,16 +118,16 @@ public class TapsyPagerAdapter extends PagerAdapter {
 		addDrinkButton.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				cxt.addDrink();
+				tapsy.addDrink();
 			}
 		});
 		
 		TextView drinksCountView = (TextView)watchFace.findViewById(R.id.drinkCountText);
-		cxt.setDrinksCountView(drinksCountView);
+		tapsy.setDrinksCountView(drinksCountView);
 		TextView bacView = (TextView)watchFace.findViewById(R.id.bac);
-		cxt.setBacView(bacView);
+		tapsy.setBacView(bacView);
 		TextView timeLeftView = (TextView)watchFace.findViewById(R.id.timeLeft);
-		cxt.setTimeLeftView(timeLeftView);
+		tapsy.setTimeLeftView(timeLeftView);
 		
 		Typeface digital = FontManager.createTypeface(FontManager.DIGITAL);
 		
@@ -134,12 +138,11 @@ public class TapsyPagerAdapter extends PagerAdapter {
 				((TextView)v).setTypeface(digital);
 			}
 		}
-		cxt.updateUI();
+		tapsy.updateUI();
 	}
 	
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
 		return views.size();
 	}
 

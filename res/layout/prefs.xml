@@ -33,14 +33,16 @@
 	  <RadioGroup
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
-	    android:orientation="vertical">
+	    android:orientation="horizontal">
 	    <RadioButton android:id="@+id/radio_male"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
+            android:textSize="15sp"
 	        android:text="@string/male" />
 	    <RadioButton android:id="@+id/radio_female"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
+            android:textSize="15sp"
 	        android:text="@string/female" />
 	  </RadioGroup>
       <TextView android:id="@+id/thresholdLabel"
